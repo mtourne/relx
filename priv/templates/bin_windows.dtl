@@ -33,8 +33,15 @@ cd %rootdir%
 @echo Progname=%progname% >> "%erl_ini%"
 @echo Rootdir=%converted_rootdir% >> "%erl_ini%"
 
+:: Start epmd
+:: convert path to remove spaces
+@for %%I in ("%epmd%") do @set run_epmd=%%~sI
+%run_epmd% -daemon
+
 :: Start the release in an `erl` shell
-@%erl% %erl_opts% %sys_config% -boot "%boot_script%" %*
+:: convert path to remove spaces
+@for %%I in ("%erl%") do @set run_erl=%%~sI
+%run_erl% %erl_opts% %sys_config% -boot "%boot_script%" %*
 
 @goto :eof
 
